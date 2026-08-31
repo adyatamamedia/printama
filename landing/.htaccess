@@ -1,22 +1,58 @@
+# ==========================================
+# PRINTAMA LANDING PAGE SECURITY & PERFORMANCE
+# ==========================================
+
+# 1. Nonaktifkan Directory Listing (Mencegah intip isi folder)
+Options -Indexes
+
+# 2. Blokir Akses ke File Tersembunyi & Sensitif
+<FilesMatch "(^\.|\.json$|\.lock$|\.md$|\.yml$|\.yaml$|\.env$|\.sql$|\.bak$|\.log$)">
+  Order Allow,Deny
+  Deny from all
+</FilesMatch>
+
+# 3. URL Rewrite & Clean URLs
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
 
-  # 1. Redirect index.html ke root domain /
+  # Blokir Scraper Jahat & Vulnerability Scanner
+  RewriteCond %{HTTP_USER_AGENT} (sqlmap|nikto|acunetix|wpscan|masscan|zgrab|nmap|havij|libwww-perl) [NC]
+  RewriteRule .* - [F,L]
+
+  # Redirect index.html ke root domain /
   RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /.*index\.html\ HTTP/ [NC]
   RewriteRule ^(.*)index\.html$ /$1 [R=301,L]
 
-  # 2. Redirect request .html langsung ke clean URL tanpa .html
+  # Redirect request .html langsung ke clean URL tanpa .html
   RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /([^\ ]+)\.html [NC]
   RewriteRule ^ %1 [R=301,L]
 
-  # 3. Rewrite internal clean URL ke file .html jika ada
+  # Rewrite internal clean URL ke file .html jika ada
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME}.html -f
   RewriteRule ^(.*)$ $1.html [L]
 </IfModule>
 
-# Caching & Header Security
+# 4. Enterprise Security HTTP Headers
+<IfModule mod_headers.c>
+  # Mencegah Clickjacking (Website tidak bisa disematkan di iframe phishing)
+  Header set X-Frame-Options "SAMEORIGIN"
+
+  # Mencegah MIME Type Sniffing (Mencegah eksekusi script terselubung)
+  Header set X-Content-Type-Options "nosniff"
+
+  # Proteksi Cross-Site Scripting (XSS)
+  Header set X-XSS-Protection "1; mode=block"
+
+  # Kebijakan Referrer Aman
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # Batasi Akses Fitur Hardware Browser yang Tidak Digunakan
+  Header set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+</IfModule>
+
+# 5. Caching & Performance Optimization
 <IfModule mod_expires.c>
   ExpiresActive On
   ExpiresByType image/jpg "access plus 1 month"

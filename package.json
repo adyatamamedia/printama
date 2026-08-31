@@ -11,6 +11,7 @@
     "postinstall": "electron-builder install-app-deps",
     "build:dir": "npm run build && electron-builder --dir",
     "build:win": "npm run build && electron-builder --win",
+    "build:win7": "npm run build && electron-builder --config electron-builder-win7.yml --win -c.electronVersion=22.3.27",
     "test": "vitest run",
     "test:watch": "vitest"
   },

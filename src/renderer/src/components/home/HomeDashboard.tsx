@@ -1,21 +1,59 @@
-import React from 'react'
-import { Image, CreditCard, Camera, ArrowRight, Heart } from 'lucide-react'
+import React, { useState, useEffect } from 'react'
+import { Image, CreditCard, Camera, ArrowRight, Heart, Sparkles } from 'lucide-react'
 import logoDark from '../../assets/logo-dark.png'
+import { UpdateModal, UpdateInfo } from '../modals/UpdateModal'
 
 interface HomeDashboardProps {
   onSelectModule: (module: 'pas-foto' | 'ktp-id' | 'polaroid') => void
 }
 
 export const HomeDashboard: React.FC<HomeDashboardProps> = ({ onSelectModule }) => {
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
+  const [updateInfo, setUpdateInfo] = useState<UpdateInfo | null>(null)
+  const [isCheckingUpdate, setIsCheckingUpdate] = useState(false)
+
+  // Auto-check rilis terbaru di background saat aplikasi dibuka
+  const performCheckUpdate = async (showModalOnDone = false) => {
+    if (!window.api?.checkForUpdates) return
+    try {
+      setIsCheckingUpdate(true)
+      const res = await window.api.checkForUpdates()
+      setUpdateInfo(res)
+      if (showModalOnDone) {
+        setIsUpdateModalOpen(true)
+      }
+    } catch (err) {
+      console.error('Check update failed:', err)
+    } finally {
+      setIsCheckingUpdate(false)
+    }
+  }
+
+  useEffect(() => {
+    performCheckUpdate(false)
+  }, [])
+
   const openUrl = (url: string) => {
-    window.open(url, '_blank')
+    if (window.api?.openExternal) {
+      window.api.openExternal(url)
+    } else {
+      window.open(url, '_blank')
+    }
   }
 
   const openDocUrl = (page: 'docs' | 'changelog' | 'update') => {
+    if (page === 'update') {
+      setIsUpdateModalOpen(true)
+      if (!updateInfo) {
+        performCheckUpdate(true)
+      }
+      return
+    }
+
     if (import.meta.env.DEV) {
-      window.open(`http://localhost/printama/landing/${page}.html`, '_blank')
+      openUrl(`http://localhost/printama/landing/${page}.html`)
     } else {
-      window.open(`https://print.tama.my.id/${page}`, '_blank')
+      openUrl(`https://print.tama.my.id/${page}`)
     }
   }
 
@@ -136,12 +174,26 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({ onSelectModule }) 
               Changelog
             </button>
             <span className="text-border/60">|</span>
-            <button
-              onClick={() => openDocUrl('update')}
-              className="hover:text-foreground transition-colors font-medium hover:underline"
-            >
-              Update
-            </button>
+
+            {/* Dynamic Update Button / Badge */}
+            {updateInfo?.hasUpdate ? (
+              <button
+                onClick={() => setIsUpdateModalOpen(true)}
+                className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-300 hover:bg-amber-500/25 font-bold transition-all shadow-sm group"
+                title="Versi baru tersedia! Klik untuk melihat rincian pembaruan."
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping" />
+                <span className="text-[11px]">Update Tersedia (v{updateInfo.latestVersion})</span>
+              </button>
+            ) : (
+              <button
+                onClick={() => openDocUrl('update')}
+                className="hover:text-foreground transition-colors font-medium hover:underline"
+              >
+                Update
+              </button>
+            )}
+
             <span className="text-border/60">|</span>
             <span className="font-mono text-[11px] px-1.5 py-0.5 rounded bg-muted/60 text-foreground font-semibold border border-border/60">
               v1.0.0
@@ -177,6 +229,15 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({ onSelectModule }) 
           </div>
         </div>
       </footer>
+
+      {/* Modal Notifikasi Update Menarik */}
+      <UpdateModal
+        isOpen={isUpdateModalOpen}
+        onClose={() => setIsUpdateModalOpen(false)}
+        updateInfo={updateInfo}
+        isChecking={isCheckingUpdate}
+        onCheckAgain={() => performCheckUpdate(true)}
+      />
     </div>
   )
 }

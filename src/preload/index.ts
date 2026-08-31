@@ -95,7 +95,22 @@ export const api = {
     heightMm: number
     printOptions: PrintOptions
   }): Promise<{ success: boolean; error?: string }> =>
-    ipcRenderer.invoke('printing:print-direct', payload)
+    ipcRenderer.invoke('printing:print-direct', payload),
+
+  // External Links & Auto-Update
+  openExternal: (url: string): Promise<{ success: boolean; error?: string }> =>
+    ipcRenderer.invoke('app:open-external', url),
+  checkForUpdates: (): Promise<{
+    hasUpdate: boolean
+    currentVersion: string
+    latestVersion?: string
+    releaseTitle?: string
+    releaseNotes?: string
+    downloadUrl?: string
+    htmlUrl?: string
+    publishedAt?: string
+    error?: string
+  }> => ipcRenderer.invoke('app:check-for-updates')
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

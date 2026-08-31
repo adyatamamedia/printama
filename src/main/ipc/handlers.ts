@@ -658,4 +658,76 @@ export function registerIpcHandlers(mainWindow: BrowserWindow): void {
       }
     }
   )
+
+  // 12. Buka URL Eksternal di Default Browser
+  ipcMain.handle('app:open-external', async (_, url: string) => {
+    try {
+      await shell.openExternal(url)
+      return { success: true }
+    } catch (err: any) {
+      return { success: false, error: err.message }
+    }
+  })
+
+  // 13. Auto-Check Update dari GitHub Releases
+  ipcMain.handle('app:check-for-updates', async () => {
+    try {
+      const currentVersion = app.getVersion() || '1.0.0'
+      const response = await fetch(
+        'https://api.github.com/repos/adyatamamedia/printama/releases/latest',
+        {
+          headers: {
+            'User-Agent': 'Printama-Desktop-App',
+            Accept: 'application/vnd.github.v3+json'
+          }
+        }
+      )
+
+      if (!response.ok) {
+        return {
+          hasUpdate: false,
+          currentVersion,
+          error: response.status === 404 ? 'Belum ada rilis publik di GitHub.' : `HTTP ${response.status}`
+        }
+      }
+
+      const release = (await response.json()) as any
+      const rawTag = release.tag_name || ''
+      const latestVersion = rawTag.replace(/^v/i, '')
+
+      const parseSemver = (v: string) =>
+        v.replace(/^v/i, '').split('.').map((n) => parseInt(n, 10) || 0)
+      const [cMaj, cMin, cPatch] = parseSemver(currentVersion)
+      const [lMaj, lMin, lPatch] = parseSemver(latestVersion)
+
+      let hasUpdate = false
+      if (lMaj > cMaj) hasUpdate = true
+      else if (lMaj === cMaj && lMin > cMin) hasUpdate = true
+      else if (lMaj === cMaj && lMin === cMin && lPatch > cPatch) hasUpdate = true
+
+      // Cari file installer .exe jika tersedia
+      const exeAsset = release.assets?.find(
+        (a: any) => typeof a.name === 'string' && a.name.toLowerCase().endsWith('.exe')
+      )
+      const downloadUrl = exeAsset ? exeAsset.browser_download_url : release.html_url
+
+      return {
+        hasUpdate,
+        currentVersion,
+        latestVersion,
+        releaseTitle: release.name || rawTag,
+        releaseNotes: release.body || 'Pembaruan stabilitas dan peningkatan fitur.',
+        downloadUrl,
+        htmlUrl: release.html_url,
+        publishedAt: release.published_at
+      }
+    } catch (err: any) {
+      console.error('Check update failed:', err)
+      return {
+        hasUpdate: false,
+        currentVersion: app.getVersion() || '1.0.0',
+        error: err.message
+      }
+    }
+  })
 }

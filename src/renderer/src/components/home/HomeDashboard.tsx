@@ -50,11 +50,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({ onSelectModule }) 
       return
     }
 
-    if (import.meta.env.DEV) {
-      openUrl(`http://localhost/printama/landing/${page}.html`)
-    } else {
-      openUrl(`https://print.tama.my.id/${page}`)
-    }
+    openUrl(`https://print.tama.my.id/${page}.html`)
   }
 
   return (

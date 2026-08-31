@@ -98,6 +98,7 @@ export const api = {
     ipcRenderer.invoke('printing:print-direct', payload),
 
   // External Links & Auto-Update
+  getAppVersion: (): Promise<string> => ipcRenderer.invoke('app:get-version'),
   openExternal: (url: string): Promise<{ success: boolean; error?: string }> =>
     ipcRenderer.invoke('app:open-external', url),
   checkForUpdates: (): Promise<{

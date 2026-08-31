@@ -669,6 +669,11 @@ export function registerIpcHandlers(mainWindow: BrowserWindow): void {
     }
   })
 
+  // 13. Dapatkan Versi Aplikasi Aktif
+  ipcMain.handle('app:get-version', () => {
+    return app.getVersion() || '1.0.0'
+  })
+
   // 13. Auto-Check Update dari GitHub Releases / Tags
   ipcMain.handle('app:check-for-updates', async () => {
     try {

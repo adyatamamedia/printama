@@ -11,14 +11,23 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({ onSelectModule }) 
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
   const [updateInfo, setUpdateInfo] = useState<UpdateInfo | null>(null)
   const [isCheckingUpdate, setIsCheckingUpdate] = useState(false)
+  const [appVersion, setAppVersion] = useState<string>('1.0.0')
 
-  // Auto-check rilis terbaru di background saat aplikasi dibuka
+  // Muat versi aplikasi lokal & auto-check rilis terbaru di GitHub
   const performCheckUpdate = async (showModalOnDone = false) => {
+    if (window.api?.getAppVersion) {
+      try {
+        const v = await window.api.getAppVersion()
+        if (v) setAppVersion(v)
+      } catch (_) {}
+    }
+
     if (!window.api?.checkForUpdates) return
     try {
       setIsCheckingUpdate(true)
       const res = await window.api.checkForUpdates()
       setUpdateInfo(res)
+      if (res.currentVersion) setAppVersion(res.currentVersion)
       if (showModalOnDone) {
         setIsUpdateModalOpen(true)
       }
@@ -191,8 +200,11 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({ onSelectModule }) 
             )}
 
             <span className="text-border/60">|</span>
-            <span className="font-mono text-[11px] px-1.5 py-0.5 rounded bg-muted/60 text-foreground font-semibold border border-border/60">
-              v1.0.0
+            <span
+              className="font-mono text-[11px] px-1.5 py-0.5 rounded bg-muted/60 text-foreground font-semibold border border-border/60"
+              title={`Versi aplikasi saat ini: v${appVersion}`}
+            >
+              v{appVersion}
             </span>
           </div>
 

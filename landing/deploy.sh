@@ -18,23 +18,16 @@ echo -e "${CYAN}======================================================${NC}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR" || exit 1
 
-# 2. Cek apakah ini direktori git atau subfolder repo
-if [ -d "../.git" ]; then
-    echo -e "${YELLOW}📦 Menarik pembaruan dari repository GitHub (Root Repo)...${NC}"
-    cd ..
-    git fetch origin main
-    git reset --hard origin/main
-    cd "$SCRIPT_DIR" || exit 1
-elif [ -d ".git" ]; then
-    echo -e "${YELLOW}📦 Menarik pembaruan dari repository GitHub (Direct Landing)...${NC}"
-    git fetch origin main
-    git reset --hard origin/main
-else
-    echo -e "${YELLOW}ℹ️  Mengambil berkas landing langsung dari GitHub...${NC}"
-    git clone --depth 1 --filter=blob:none --sparse https://github.com/adyatamamedia/printama.git /tmp/printama-temp 2>/dev/null
-    cd /tmp/printama-temp && git sparse-checkout set landing && cd "$SCRIPT_DIR"
-    cp -r /tmp/printama-temp/landing/* "$SCRIPT_DIR/"
-    rm -rf /tmp/printama-temp
+# 2. Tarik pembaruan dari repository GitHub
+echo -e "${YELLOW}📦 Menarik pembaruan dari repository GitHub...${NC}"
+git fetch origin main
+git reset --hard origin/main
+
+if [ -d "landing" ]; then
+    echo -e "${YELLOW}📂 Menyalin berkas landing ke folder utama...${NC}"
+    cp -rf landing/* .
+    cp -rf landing/.htaccess . 2>/dev/null
+    rm -rf landing
 fi
 
 # 3. Atur hak akses file agar aman dan bisa dibaca Nginx/Web Server

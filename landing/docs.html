@@ -197,30 +197,69 @@
           </div>
 
           <!-- Section 1: Instalasi -->
-          <section id="instalasi" class="pt-8 border-t border-white/10 space-y-4">
+          <section id="instalasi" class="pt-8 border-t border-white/10 space-y-5">
             <h2 class="text-2xl font-bold text-white flex items-center gap-2">
-              <span class="text-amber-400">1.</span> Persyaratan Sistem &amp; Instalasi
+              <span class="text-amber-400">1.</span> Persyaratan Sistem &amp; Panduan Instalasi
             </h2>
             <p class="text-sm text-white/60 leading-relaxed">
-              Printama adalah aplikasi desktop native Windows yang tidak membutuhkan runtime eksternal dan 100% bebas dari ketergantungan internet/cloud.
+              Printama adalah aplikasi desktop native Windows yang 100% bebas dari ketergantungan internet/cloud. Kami menyediakan <strong>2 edisi resmi</strong> untuk menjamin kompatibilitas menyeluruh pada semua komputer studio dan percetakan:
             </p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-              <div class="p-4 rounded-xl bg-white/[0.03] border border-white/5">
-                <span class="text-xs text-amber-400 font-mono font-bold block mb-1">Sistem Operasi</span>
-                <span class="text-sm text-white font-medium">Windows 10 / Windows 11 (64-bit)</span>
+
+            <!-- 2 Edition Comparison Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+              <!-- Win 10/11 Edition -->
+              <div class="p-5 rounded-2xl bg-amber-500/[0.04] border border-amber-500/20 space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-mono font-bold px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/30">EDISI UTAMA (MODERN)</span>
+                  <span class="text-[11px] font-mono text-white/40">Engine v34</span>
+                </div>
+                <h3 class="text-base font-bold text-white">Windows 10 &amp; Windows 11 (64-bit)</h3>
+                <ul class="text-xs text-white/70 space-y-1.5 list-disc list-inside">
+                  <li>Menggunakan engine Chromium &amp; Node.js generasi terbaru.</li>
+                  <li>Tersedia paket <strong>Installer (.exe)</strong> dan <strong>Portable (.exe)</strong>.</li>
+                  <li>Otomatis mendeteksi update terbaru langsung dari GitHub.</li>
+                </ul>
               </div>
+
+              <!-- Win 7/8 Legacy Edition -->
+              <div class="p-5 rounded-2xl bg-cyan-500/[0.04] border border-cyan-500/20 space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-mono font-bold px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">EDISI KHUSUS LEGACY</span>
+                  <span class="text-[11px] font-mono text-white/40">Engine v22 LTS</span>
+                </div>
+                <h3 class="text-base font-bold text-white">Windows 7 (SP1) &amp; Windows 8 (64-bit)</h3>
+                <ul class="text-xs text-white/70 space-y-1.5 list-disc list-inside">
+                  <li>Khusus komputer percetakan lama tanpa perlu install kernel patch.</li>
+                  <li>Bebas error <code>KERNEL32.dll / SHELL32.dll</code>.</li>
+                  <li>Seluruh fitur (Pas Foto, FC KTP, Polaroid, 300 DPI) 100% lengkap.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- System Specs Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
               <div class="p-4 rounded-xl bg-white/[0.03] border border-white/5">
-                <span class="text-xs text-amber-400 font-mono font-bold block mb-1">Memori RAM</span>
+                <span class="text-xs text-amber-400 font-mono font-bold block mb-1">Kebutuhan RAM</span>
                 <span class="text-sm text-white font-medium">Minimal 2 GB (Disarankan 4 GB)</span>
               </div>
               <div class="p-4 rounded-xl bg-white/[0.03] border border-white/5">
                 <span class="text-xs text-amber-400 font-mono font-bold block mb-1">Dukungan Printer</span>
-                <span class="text-sm text-white font-medium">Semua Printer Inkjet/Laser (Epson, Canon, HP, Brother)</span>
+                <span class="text-sm text-white font-medium">Epson, Canon, HP, Brother, dll</span>
               </div>
               <div class="p-4 rounded-xl bg-white/[0.03] border border-white/5">
                 <span class="text-xs text-amber-400 font-mono font-bold block mb-1">Format Kertas</span>
-                <span class="text-sm text-white font-medium">A4 (210×297 mm) &amp; F4/Folio (215×330 mm)</span>
+                <span class="text-sm text-white font-medium">A4 &amp; F4/Folio (Portrait / Landscape)</span>
               </div>
+            </div>
+
+            <!-- Cara Instalasi Singkat -->
+            <div class="p-4 rounded-xl bg-white/[0.02] border border-white/5 text-xs text-white/60 space-y-2">
+              <h4 class="text-sm font-bold text-white">Petunjuk Pemasangan:</h4>
+              <ol class="space-y-1.5 list-decimal list-inside">
+                <li>Buka halaman <a href="update" class="text-amber-400 hover:underline font-medium">Pusat Unduhan</a> dan pilih installer sesuai versi Windows Anda.</li>
+                <li>Jalankan berkas <code>.exe</code> yang diunduh. Jika muncul peringatan Windows SmartScreen, klik <em>"More Info"</em> lalu <em>"Run anyway"</em>.</li>
+                <li>Aplikasi langsung terbuka dan siap digunakan tanpa perlu koneksi internet.</li>
+              </ol>
             </div>
           </section>
 

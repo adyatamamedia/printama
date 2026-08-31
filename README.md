@@ -11,11 +11,22 @@
 <p align="center">
   <a href="https://print.tama.my.id"><img src="https://img.shields.io/badge/Website-print.tama.my.id-amber?style=flat-square" alt="Website"></a>
   <img src="https://img.shields.io/badge/Version-1.0.0-emerald?style=flat-square" alt="Version">
-  <img src="https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011%20(64--bit)-blue?style=flat-square" alt="Platform">
+  <img src="https://img.shields.io/badge/Platform-Windows%207%20%7C%208%20%7C%2010%20%7C%2011-blue?style=flat-square" alt="Platform">
   <img src="https://img.shields.io/badge/Environment-100%25%20Offline-orange?style=flat-square" alt="Offline">
   <a href="https://t.me/dstama"><img src="https://img.shields.io/badge/Support-Telegram%20%40dstama-229ED9?style=flat-square&logo=telegram" alt="Telegram Support"></a>
   <a href="https://saweria.co/adyatamatech"><img src="https://img.shields.io/badge/Donate-Saweria-f59e0b?style=flat-square" alt="Saweria"></a>
 </p>
+
+---
+
+## 📥 Unduh Berkas Rilis Resmi (v1.0.0)
+
+| Edisi | Tipe Berkas | Ukuran | Link Unduhan |
+|---|---|---|---|
+| **Windows 10 & 11 (64-bit)** | Installer (.exe) | ~90.8 MB | [Download Installer](https://github.com/adyatamamedia/printama/releases/download/v1.0.0/Printama-Setup-1.0.0.exe) |
+| **Windows 10 & 11 (64-bit)** | Portable Standalone | ~90.6 MB | [Download Portable](https://github.com/adyatamamedia/printama/releases/download/v1.0.0/Printama-1.0.0-Portable.exe) |
+| **Windows 7 & 8 Legacy (64-bit)** | Installer (.exe) | ~350 MB | [Download Win7 Installer](https://github.com/adyatamamedia/printama/releases/download/v1.0.0/Printama-Setup-1.0.0-Win7.exe) |
+| **Windows 7 & 8 Legacy (64-bit)** | Portable Standalone | ~349 MB | [Download Win7 Portable](https://github.com/adyatamamedia/printama/releases/download/v1.0.0/Printama-1.0.0-Win7-Portable.exe) |
 
 ---
 

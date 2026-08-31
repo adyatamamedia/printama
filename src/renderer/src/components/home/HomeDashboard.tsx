@@ -59,7 +59,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({ onSelectModule }) 
       return
     }
 
-    openUrl(`https://print.tama.my.id/${page}.html`)
+    openUrl(`https://print.tama.my.id/${page}`)
   }
 
   return (

@@ -1,5 +1,5 @@
 import React from 'react'
-import { X, Sparkles, Download, CheckCircle2, ArrowRight, RefreshCw, ExternalLink } from 'lucide-react'
+import { X, Download, CheckCircle2, ArrowRight, RefreshCw, ExternalLink, Sparkles } from 'lucide-react'
 
 export interface UpdateInfo {
   hasUpdate: boolean
@@ -54,112 +54,99 @@ export const UpdateModal: React.FC<UpdateModalProps> = ({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg overflow-hidden rounded-2xl bg-[#0e141f] border border-border shadow-2xl text-foreground">
-        {/* Ambient Top Glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-28 bg-primary/20 blur-3xl pointer-events-none rounded-full" />
-
+    <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
+      <div className="bg-card border border-border rounded-lg w-full max-w-md shadow-2xl overflow-hidden text-foreground flex flex-col">
         {/* Header */}
-        <div className="relative flex items-center justify-between px-6 pt-6 pb-4 border-b border-border/60">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
-              <Sparkles className="w-4 h-4" />
-            </div>
-            <div>
-              <h3 className="text-base font-extrabold text-foreground">
-                Pembaruan Aplikasi
-              </h3>
-              <p className="text-xs text-muted-foreground font-mono">
-                GitHub Releases Channel
-              </p>
-            </div>
+        <div className="h-10 px-3.5 border-b border-border flex items-center justify-between bg-card shrink-0">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-3.5 h-3.5 text-primary" />
+            <h3 className="font-bold text-xs text-foreground uppercase tracking-wider">
+              Pembaruan Aplikasi
+            </h3>
           </div>
-
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary/60 transition-colors"
+            className="p-1 rounded text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
           >
-            <X className="w-4 h-4" />
+            <X className="w-3.5 h-3.5" />
           </button>
         </div>
 
         {/* Content Body */}
-        <div className="p-6 space-y-5 max-h-[70vh] overflow-y-auto">
+        <div className="p-4 space-y-3.5 text-xs">
           {isChecking ? (
-            <div className="py-12 flex flex-col items-center justify-center text-center space-y-3">
-              <RefreshCw className="w-8 h-8 text-primary animate-spin" />
-              <p className="text-sm font-semibold text-foreground">
+            <div className="py-8 flex flex-col items-center justify-center text-center space-y-2.5">
+              <RefreshCw className="w-6 h-6 text-primary animate-spin" />
+              <p className="font-semibold text-xs text-foreground">
                 Memeriksa rilis terbaru di GitHub...
               </p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-[11px] text-muted-foreground">
                 Menghubungi repository adyatamamedia/printama
               </p>
             </div>
           ) : updateInfo?.hasUpdate ? (
-            <div className="space-y-4">
-              {/* Version Comparison Banner */}
-              <div className="p-4 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-between">
+            <div className="space-y-3">
+              {/* Version Comparison Card */}
+              <div className="p-3 rounded bg-primary/10 border border-primary/30 flex items-center justify-between">
                 <div>
-                  <span className="text-[11px] font-mono text-muted-foreground block">
+                  <span className="text-[10px] font-mono text-muted-foreground uppercase block font-bold">
                     Versi Saat Ini
                   </span>
-                  <span className="font-mono text-sm font-bold text-foreground">
+                  <span className="font-mono text-xs font-bold text-foreground">
                     v{updateInfo.currentVersion}
                   </span>
                 </div>
 
-                <div className="flex items-center gap-1.5 text-primary">
-                  <ArrowRight className="w-4 h-4" />
-                </div>
+                <ArrowRight className="w-3.5 h-3.5 text-primary shrink-0" />
 
                 <div className="text-right">
-                  <span className="text-[11px] font-mono text-emerald-400 font-bold block">
-                    Versi Baru Tersedia
+                  <span className="text-[10px] font-mono text-amber-400 uppercase block font-bold">
+                    Versi Terbaru
                   </span>
-                  <span className="font-mono text-sm font-extrabold text-emerald-400">
+                  <span className="font-mono text-xs font-extrabold text-amber-400">
                     v{updateInfo.latestVersion}
                   </span>
                 </div>
               </div>
 
               {/* Release Title & Date */}
-              <div>
-                <h4 className="text-sm font-bold text-foreground">
+              <div className="px-0.5 space-y-0.5">
+                <h4 className="font-bold text-xs text-foreground">
                   {updateInfo.releaseTitle || `Rilis v${updateInfo.latestVersion}`}
                 </h4>
                 {updateInfo.publishedAt && (
-                  <span className="text-[11px] font-mono text-muted-foreground">
-                    Dirilis pada:{' '}
+                  <p className="text-[11px] text-muted-foreground font-mono">
+                    Rilis pada:{' '}
                     {new Date(updateInfo.publishedAt).toLocaleDateString('id-ID', {
                       year: 'numeric',
                       month: 'long',
                       day: 'numeric'
                     })}
-                  </span>
+                  </p>
                 )}
               </div>
 
-              {/* Release Notes Box */}
-              <div className="space-y-1.5">
-                <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider font-mono">
-                  Catatan Pembaruan & Fitur:
+              {/* Release Notes */}
+              <div className="space-y-1">
+                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider font-mono">
+                  CATATAN PEMBARUAN:
                 </span>
-                <div className="p-3.5 rounded-xl bg-black/40 border border-border/80 text-xs text-muted-foreground font-mono leading-relaxed max-h-44 overflow-y-auto whitespace-pre-wrap">
+                <div className="p-2.5 rounded bg-muted/40 border border-border text-[11px] font-mono text-muted-foreground leading-relaxed max-h-36 overflow-y-auto whitespace-pre-wrap">
                   {updateInfo.releaseNotes}
                 </div>
               </div>
             </div>
           ) : (
-            <div className="py-8 flex flex-col items-center justify-center text-center space-y-3">
-              <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-                <CheckCircle2 className="w-6 h-6" />
+            <div className="py-6 flex flex-col items-center justify-center text-center space-y-2">
+              <div className="w-9 h-9 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                <CheckCircle2 className="w-4 h-4" />
               </div>
-              <div>
-                <h4 className="text-base font-bold text-foreground">
-                  Aplikasi Anda Sudah Versi Terbaru!
+              <div className="space-y-0.5">
+                <h4 className="font-bold text-xs text-foreground">
+                  Aplikasi Anda Sudah Versi Terbaru
                 </h4>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Saat ini Anda menggunakan Printama versi{' '}
+                <p className="text-[11px] text-muted-foreground">
+                  Anda sedang menggunakan Printama{' '}
                   <span className="font-mono font-bold text-foreground">
                     v{updateInfo?.currentVersion || '1.0.0'}
                   </span>
@@ -170,14 +157,14 @@ export const UpdateModal: React.FC<UpdateModalProps> = ({
           )}
         </div>
 
-        {/* Footer Actions */}
-        <div className="px-6 py-4 border-t border-border/60 bg-secondary/20 flex items-center justify-between gap-3">
+        {/* Footer */}
+        <div className="h-11 px-3.5 border-t border-border flex items-center justify-between bg-muted/20 shrink-0">
           <button
             onClick={onCheckAgain}
             disabled={isChecking}
-            className="text-xs text-muted-foreground hover:text-foreground font-medium flex items-center gap-1.5 transition-colors disabled:opacity-50"
+            className="flex items-center gap-1.5 text-[11px] text-muted-foreground hover:text-foreground font-semibold transition-colors disabled:opacity-50"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${isChecking ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`w-3 h-3 ${isChecking ? 'animate-spin' : ''}`} />
             <span>Periksa Ulang</span>
           </button>
 
@@ -186,24 +173,24 @@ export const UpdateModal: React.FC<UpdateModalProps> = ({
               <>
                 <button
                   onClick={handleViewGitHub}
-                  className="px-3.5 py-2 rounded-lg border border-border hover:bg-secondary/60 text-xs font-semibold text-foreground transition-colors flex items-center gap-1.5"
+                  className="px-2.5 py-1 rounded text-xs font-semibold text-muted-foreground hover:text-foreground hover:bg-muted transition-colors border border-border flex items-center gap-1"
                 >
-                  <ExternalLink className="w-3.5 h-3.5" />
-                  <span>Lihat GitHub</span>
+                  <ExternalLink className="w-3 h-3" />
+                  <span>GitHub</span>
                 </button>
 
                 <button
                   onClick={handleDownload}
-                  className="px-4 py-2 rounded-lg bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-bold transition-all shadow-md shadow-primary/20 flex items-center gap-2"
+                  className="flex items-center gap-1.5 px-3 py-1 rounded text-xs font-bold bg-primary hover:bg-primary/90 text-primary-foreground transition-colors shadow-sm"
                 >
-                  <Download className="w-4 h-4" />
-                  <span>Unduh Pembaruan (.exe)</span>
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Unduh Update</span>
                 </button>
               </>
             ) : (
               <button
                 onClick={onClose}
-                className="px-4 py-2 rounded-lg bg-secondary hover:bg-secondary/80 text-foreground text-xs font-semibold border border-border transition-colors"
+                className="px-3.5 py-1 rounded text-xs font-semibold text-muted-foreground hover:text-foreground hover:bg-muted transition-colors border border-border"
               >
                 Tutup
               </button>

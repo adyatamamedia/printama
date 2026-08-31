@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Changelog &amp; Riwayat Rilis — Printama</title>
+
+  <!-- SEO & Meta Tags -->
+  <meta name="description" content="Riwayat pembaruan, peningkatan performa, dan catatan rilis fitur aplikasi desktop Printama.">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+
+  <!-- Google Fonts & Tailwind CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    .font-geist { font-family: 'Geist', sans-serif !important; }
+    .font-instrument-serif { font-family: 'Instrument Serif', serif !important; }
+    .font-mono { font-family: 'JetBrains Mono', monospace !important; }
+  </style>
+</head>
+<body class="min-h-screen bg-[#050505] text-white antialiased font-geist flex flex-col justify-between">
+
+  <!-- Background Ambient Glow & Grid -->
+  <div class="fixed top-0 w-full h-screen -z-10 bg-black">
+    <div class="absolute top-0 inset-x-0 h-[500px] w-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-600/15 via-black to-black opacity-60"></div>
+    <div class="absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:16px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+  </div>
+
+  <div>
+    <!-- Sticky Header -->
+    <header class="relative z-50 border-b border-white/5 bg-black/60 backdrop-blur-md sticky top-0">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="flex pt-4 pb-4 items-center justify-between">
+          <a href="index.html" class="flex items-center gap-3 group">
+            <img src="assets/logo-dark.png" alt="Printama" class="h-8 w-auto object-contain">
+            <span class="text-xs font-mono font-bold px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">
+              Changelog
+            </span>
+          </a>
+
+          <nav class="hidden md:flex items-center gap-8 text-sm text-white/70">
+            <a class="hover:text-amber-300 transition font-medium" href="index.html">
+              Beranda
+            </a>
+            <a class="hover:text-amber-300 transition font-medium" href="docs.html">
+              Dokumentasi
+            </a>
+            <a class="text-amber-400 font-bold transition font-medium" href="changelog.html">
+              Changelog
+            </a>
+            <a class="hover:text-amber-300 transition font-medium" href="update.html">
+              Update
+            </a>
+          </nav>
+
+          <div class="flex items-center gap-3">
+            <a href="index.html#download" class="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/15 px-4 py-2 text-xs font-bold text-amber-200 hover:bg-amber-500/25 hover:text-white transition group shadow-lg shadow-amber-500/10">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-400 group-hover:animate-pulse"></span>
+              Download App
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Changelog Section -->
+    <main class="mx-auto max-w-4xl px-6 lg:px-8 py-16">
+      <div class="text-center mb-14">
+        <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-400 mb-2 font-mono">
+          <span>Riwayat Pembaruan</span>
+        </div>
+        <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-white">
+          Changelog &amp; Rilis
+        </h1>
+        <p class="mt-4 text-base text-white/60 max-w-xl mx-auto leading-relaxed">
+          Catatan rilis fitur baru, perbaikan bug, dan peningkatan performa aplikasi Printama.
+        </p>
+      </div>
+
+      <!-- Timeline Card v1.0.0 -->
+      <div class="space-y-8">
+        <article class="rounded-3xl bg-[#0F0F0F]/80 border border-white/10 p-8 sm:p-10 backdrop-blur-xl space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-white/10">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl font-bold text-white">Printama v1.0.0</span>
+              <span class="text-xs font-mono font-bold px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                Rilis Stabil Terbaru
+              </span>
+            </div>
+            <span class="text-xs text-white/40 font-mono">31 Agustus 2026</span>
+          </div>
+
+          <!-- Feature Group 1 -->
+          <div class="space-y-3">
+            <h3 class="text-sm font-bold text-amber-300 uppercase tracking-wide font-mono flex items-center gap-2">
+              <span>Fitur Utama &amp; Modul Baru:</span>
+            </h3>
+            <ul class="space-y-2 text-sm text-white/70">
+              <li class="flex items-start gap-2">
+                <span class="text-amber-400 font-bold">•</span>
+                <span><strong>Modul Layout Pas Foto:</strong> Penataan cerdas ukuran 2×3, 3×4, 4×6, 2R di kertas A4 &amp; F4 dengan preset Standar (12), Lengkap (19), Lamaran (11), dan Full (35).</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-amber-400 font-bold">•</span>
+                <span><strong>Modul Fotokopi &amp; Scan KTP:</strong> Pemindaian langsung dari hardware scanner (WIA), skala fisik 1:1, tata letak sisi depan-belakang, dan panduan garis potong.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-amber-400 font-bold">•</span>
+                <span><strong>Modul Polaroid Studio Aesthetic:</strong> Batch print 9 foto/lembar dengan sistem auto-pagination multi-lembar otomatis dan 6 motif background unik.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-amber-400 font-bold">•</span>
+                <span><strong>Built-in Image Adjustments:</strong> Penyesuaian Kecerahan, Kontras, Saturasi, Ketajaman (Sharpen), Grayscale, dan Sepia Vintage per foto.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-amber-400 font-bold">•</span>
+                <span><strong>Ekspor 300 DPI:</strong> Dukungan ekspor ke format PDF Siap Cetak, PNG Ultra-Crisp, dan JPEG resolusi tinggi.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Feature Group 2 -->
+          <div class="space-y-3 pt-4 border-t border-white/5">
+            <h3 class="text-sm font-bold text-emerald-400 uppercase tracking-wide font-mono flex items-center gap-2">
+              <span>Peningkatan Performa &amp; UI:</span>
+            </h3>
+            <ul class="space-y-2 text-sm text-white/70">
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-400 font-bold">•</span>
+                <span>Standardisasi tipografi UPPERCASE pada seluruh label section sidebar untuk konsistensi antarmuka.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-400 font-bold">•</span>
+                <span>Dukungan zoom mouse wheel interaktif pada kanvas kerja preview 1:1.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-400 font-bold">•</span>
+                <span>Fitur double-click pada slider untuk reset nilai adjustment ke default 0 secara instan.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-400 font-bold">•</span>
+                <span>Isolasi state penyesuaian warna per foto agar tidak saling bocor ke foto lainnya.</span>
+              </li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10 bg-[#020202] pt-14 pb-12 mt-16">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="flex flex-col items-center justify-center gap-6 text-center">
+        <a href="index.html" class="flex items-center gap-2">
+          <img src="assets/logo-dark.png" alt="Printama" class="h-8 w-auto">
+        </a>
+        <div class="flex items-center flex-wrap justify-center gap-6 text-xs font-semibold text-white/70">
+          <a href="docs.html" class="hover:text-amber-400 transition">Documentation</a>
+          <span class="text-white/20">•</span>
+          <a href="changelog.html" class="text-amber-400 transition">Changelog</a>
+          <span class="text-white/20">•</span>
+          <a href="update.html" class="hover:text-amber-400 transition">Update</a>
+          <span class="text-white/20">•</span>
+          <span class="font-mono text-[11px] px-2 py-0.5 rounded bg-white/5 text-amber-300 border border-white/10">v1.0.0</span>
+        </div>
+
+        <div class="flex items-center flex-wrap justify-center gap-3 pt-2">
+          <a href="https://t.me/dstama" target="_blank" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-white transition group" title="Telegram Support @dstama">
+            <svg width="14" height="14" fill="#229ED9" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+            </svg>
+            <span class="text-white/70 group-hover:text-white">Support:</span>
+            <span class="text-amber-400 font-bold">@dstama</span>
+          </a>
+
+          <a href="https://saweria.co/adyatamatech" target="_blank" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-xs font-semibold text-amber-300 transition shadow-sm group" title="Donasi Saweria">
+            <svg width="14" height="14" fill="#f59e0b" viewBox="0 0 24 24" class="group-hover:scale-110 transition-transform">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+            <span>Donasi Saweria</span>
+          </a>
+        </div>
+
+        <div class="pt-6 border-t border-white/5 w-full max-w-xl text-xs text-white/40">
+          © 2026 Printama. Dikembangkan oleh <strong>@dstama</strong>. All rights reserved.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

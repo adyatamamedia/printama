@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Palet Dark Studio Netral & Presisi Sesuai Permintaan User */
+    --background: 0 0% 6%; /* #0F0F0F - Latar Belakang Utama & Kanvas */
+    --foreground: 0 0% 96%; /* #F5F5F5 - Teks Utama Super Jelas */
+
+    --card: 0 0% 11%; /* #1C1C1C - Panel Samping & Kartu */
+    --card-foreground: 0 0% 96%;
+
+    --popover: 0 0% 11%; /* #1C1C1C */
+    --popover-foreground: 0 0% 96%;
+
+    --primary: 37 96% 54%; /* #fba516 - Khusus Brand Aksen & Tombol Aksi */
+    --primary-foreground: 0 0% 7%; /* Gelap Tegas di atas Orange */
+    --primary-hover: 37 96% 47%;
+
+    --secondary: 0 0% 19%; /* #313131 - Tombol Sekunder & Container Input */
+    --secondary-foreground: 0 0% 96%;
+
+    --muted: 0 0% 14%; /* #242424 */
+    --muted-foreground: 150 2% 77%; /* #C4C6C5 - Teks Sekunder, Label, Satuan */
+
+    --accent: 216 5% 24%; /* #383B40 */
+    --accent-foreground: 0 0% 96%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 19%; /* #313131 - Garis Batas 1px Antar Panel & Kartu */
+    --input: 0 0% 19%; /* #313131 */
+    --ring: 37 96% 54%;
+
+    --radius: 4px; /* Crisp desktop industrial style */
+  }
+}
+
+* {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+code, kbd, samp, pre, .font-mono {
+  font-family: 'JetBrains Mono', 'Plus Jakarta Sans', monospace !important;
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  user-select: none;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Crisp Industrial Scrollbar dengan #5B5F65 & #0F0F0F */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0F0F0F;
+  border-left: 1px solid #313131;
+  border-top: 1px solid #313131;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #5B5F65;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #737880;
+}
+
+/* Precision Tool Slider - Neutral Dark Studio Style */
+input[type='range'] {
+  accent-color: #C4C6C5;
+  height: 4px;
+  background: #313131;
+  border-radius: 2px;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #C4C6C5;
+  cursor: pointer;
+  border: 1.5px solid #1C1C1C;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+input[type='range']::-webkit-slider-thumb:hover {
+  background: #FFFFFF;
+  transform: scale(1.15);
+}
+
+/* Professional Studio Panels */
+.studio-panel {
+  background-color: hsl(var(--card));
+  border-color: hsl(var(--border));
+}
+
+.studio-input {
+  background-color: hsl(var(--muted));
+  border: 1px solid hsl(var(--border));
+  border-radius: 4px;
+  color: hsl(var(--foreground));
+}
+
+.studio-input:focus {
+  border-color: hsl(var(--primary));
+  outline: none;
+}

@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Printama — Penata &amp; Pencetak Pas Foto, FC KTP, dan Polaroid Presisi</title>
+
+  <!-- SEO & Meta Tags -->
+  <meta name="description" content="Printama adalah aplikasi desktop Windows cerdas untuk menata dan mencetak Pas Foto (2x3, 3x4, 4x6, 2R), Fotokopi KTP/ID Card 1:1 fisik, dan Polaroid Studio di kertas A4/F4 secara presisi & hemat kertas.">
+  <meta name="keywords" content="printama, cetak pas foto, layout pas foto a4, fotokopi ktp, scan ktp, cetak polaroid, aplikasi cetak foto windows">
+  <meta name="author" content="@dstama - AdyatamaTECH">
+
+  <!-- OpenGraph -->
+  <meta property="og:title" content="Printama — Penata &amp; Pencetak Pas Foto Presisi">
+  <meta property="og:description" content="Aplikasi Desktop Cerdas Penata &amp; Pencetak Pas Foto, Fotokopi KTP, dan Polaroid 100% Offline & Presisi.">
+  <meta property="og:url" content="https://print.tama.my.id">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/logo-dark.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    .font-geist { font-family: 'Geist', sans-serif !important; }
+    .font-instrument-serif { font-family: 'Instrument Serif', serif !important; }
+    .font-mono { font-family: 'JetBrains Mono', monospace !important; }
+
+    /* Animated Glowing Button */
+    .btn-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+    .btn-glow {
+      --border-radius: 9999px;
+      --padding: 4px;
+      --transition: 0.4s;
+      --button-color: #101010;
+      --highlight-color-hue: 35deg;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--button-color);
+      box-shadow:
+        inset 0px 1px 1px rgba(255, 255, 255, 0.2),
+        inset 0px 2px 2px rgba(255, 255, 255, 0.15),
+        inset 0px 4px 4px rgba(255, 255, 255, 0.1),
+        inset 0px 8px 8px rgba(255, 255, 255, 0.05),
+        inset 0px 16px 16px rgba(255, 255, 255, 0.05),
+        0px -1px 1px rgba(0, 0, 0, 0.02),
+        0px -2px 2px rgba(0, 0, 0, 0.03),
+        0px -4px 4px rgba(0, 0, 0, 0.05),
+        0px -8px 8px rgba(0, 0, 0, 0.06),
+        0px -16px 16px rgba(0, 0, 0, 0.08);
+      border: solid 1px #ffffff22;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      transition:
+        box-shadow var(--transition),
+        border var(--transition),
+        background-color var(--transition);
+    }
+    .btn-glow::before {
+      content: "";
+      position: absolute;
+      top: calc(0px - var(--padding));
+      left: calc(0px - var(--padding));
+      width: calc(100% + var(--padding) * 2);
+      height: calc(100% + var(--padding) * 2);
+      border-radius: calc(var(--border-radius) + var(--padding));
+      pointer-events: none;
+      background-image: linear-gradient(0deg, #0004, #000a);
+      z-index: -1;
+      transition: box-shadow var(--transition), filter var(--transition);
+      box-shadow:
+        0 -8px 8px -6px #0000 inset,
+        0 -16px 16px -8px #00000000 inset,
+        1px 1px 1px #fff2,
+        2px 2px 2px #fff1,
+        -1px -1px 1px #0002,
+        -2px -2px 2px #0001;
+    }
+    .btn-glow::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      background-image: linear-gradient(0deg,
+        #fff,
+        hsl(var(--highlight-color-hue), 100%, 70%),
+        hsla(var(--highlight-color-hue), 100%, 70%, 50%),
+        8%,
+        transparent);
+      background-position: 0 0;
+      opacity: 0;
+      transition: opacity var(--transition), filter var(--transition);
+    }
+    .btn-letter {
+      position: relative;
+      display: inline-block;
+      color: #ffffff99;
+      animation: letter-anim 2.5s ease-in-out infinite;
+      transition: color var(--transition), text-shadow var(--transition), opacity var(--transition);
+    }
+    @keyframes letter-anim {
+      50% {
+        text-shadow: 0 0 4px #f59e0baa;
+        color: #fbbf24;
+      }
+    }
+    .btn-svg {
+      height: 20px;
+      margin-right: 0.5rem;
+      fill: #f59e0b;
+      filter: drop-shadow(0 0 3px #f59e0b88);
+      transition: fill var(--transition), filter var(--transition), opacity var(--transition);
+    }
+    .btn-glow:hover {
+      border: solid 1px hsla(var(--highlight-color-hue), 100%, 80%, 0.4);
+    }
+    .btn-glow:hover::before {
+      box-shadow:
+        0 -8px 8px -6px #fffa inset,
+        0 -16px 16px -8px hsla(var(--highlight-color-hue), 100%, 70%, 0.3) inset,
+        1px 1px 1px #fff2,
+        2px 2px 2px #fff1,
+        -1px -1px 1px #0002,
+        -2px -2px 2px #0001;
+    }
+    .btn-glow:hover::after {
+      opacity: 1;
+      -webkit-mask-image: linear-gradient(0deg, #fff, transparent);
+      mask-image: linear-gradient(0deg, #fff, transparent);
+    }
+
+    .mask-gradient-x {
+      mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#050505] text-white antialiased font-geist">
+
+  <!-- Background Ambient Glow & Grid -->
+  <div class="fixed top-0 w-full h-screen -z-10 bg-black">
+    <div class="absolute top-0 inset-x-0 h-[600px] w-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-600/15 via-black to-black opacity-60"></div>
+    <div class="absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:16px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+  </div>
+
+  <div class="overflow-hidden relative">
+
+    <!-- Header / Navbar -->
+    <header class="relative z-50 border-b border-white/5 bg-black/60 backdrop-blur-md sticky top-0">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="flex pt-4 pb-4 items-center justify-between">
+          <!-- Logo -->
+          <a href="#" class="flex items-center gap-3 group">
+            <img src="assets/logo-dark.png" alt="Printama" class="h-8 w-auto object-contain">
+            <span class="text-xs font-mono font-bold px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">
+              v1.0.0
+            </span>
+          </a>
+
+          <!-- Navigation Links -->
+          <nav class="hidden md:flex items-center gap-8 text-sm text-white/70">
+            <a class="hover:text-amber-300 transition font-medium" href="#showcase">
+              Screenshot App
+            </a>
+            <a class="hover:text-amber-300 transition font-medium" href="#modul">
+              3 Modul Cetak
+            </a>
+            <a class="hover:text-amber-300 transition font-medium" href="#keunggulan">
+              Keunggulan
+            </a>
+            <a class="hover:text-amber-300 transition font-medium" href="docs.html">
+              Dokumentasi
+            </a>
+            <a class="hover:text-amber-300 transition font-medium" href="changelog.html">
+              Changelog
+            </a>
+            <a class="hover:text-amber-300 transition font-medium" href="update.html">
+              Update
+            </a>
+          </nav>
+
+          <!-- Action Buttons -->
+          <div class="flex items-center gap-3">
+            <a href="https://saweria.co/adyatamatech" target="_blank" class="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/30 hover:bg-amber-500/20 transition">
+              <svg width="12" height="12" fill="#f59e0b" viewBox="0 0 24 24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+              <span>Donasi Saweria</span>
+            </a>
+            <a href="#download" class="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/15 px-4 py-2 text-xs font-bold text-amber-200 hover:bg-amber-500/25 hover:text-white transition group shadow-lg shadow-amber-500/10">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-400 group-hover:animate-pulse"></span>
+              Download Windows
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="sm:pt-16 pt-12 relative z-10">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="text-center max-w-4xl mx-auto mt-6 mb-12">
+          
+          <!-- Badge -->
+          <div class="inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-3.5 py-1 text-[11px] uppercase tracking-wider font-semibold text-amber-300 mb-6">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+            </span>
+            <span>Aplikasi Desktop Windows 100% Offline &amp; Bebas Kuota</span>
+          </div>
+
+          <!-- Hero Headline -->
+          <h1 class="sm:text-6xl md:text-7xl text-5xl font-medium tracking-tight font-geist mt-2 text-transparent bg-clip-text bg-gradient-to-b from-white via-white/95 to-white/60 pb-2" data-aos="fade-up">
+            Penata &amp; Pencetak
+            <br class="hidden sm:block">
+            <span class="lg:italic font-medium text-amber-400 font-instrument-serif relative">
+              Pas Foto, KTP, &amp; Polaroid.
+              <svg class="absolute w-full h-3 -bottom-1 left-0 text-amber-500/30" viewBox="0 0 100 10" preserveAspectRatio="none">
+                <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="2" fill="none"></path>
+              </svg>
+            </span>
+          </h1>
+
+          <p class="mt-6 text-base sm:text-lg text-white/60 max-w-2xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="100">
+            Tinggalkan kalkulasi manual di Photoshop/Corel. Printama secara otomatis mengatur tata letak pas foto paket (2×3, 3×4, 4×6, 2R), fotokopi KTP 1:1 fisik, dan studio polaroid multi-lembar di kertas A4 &amp; F4 dengan ekspor ultra-tajam 300 DPI.
+          </p>
+
+          <!-- Hero CTA Buttons -->
+          <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <!-- Animated Glowing Download Button -->
+            <div class="btn-wrapper" data-aos="fade-up" data-aos-delay="200">
+              <a href="#download" class="btn-glow px-6 py-3.5 focus:outline-none text-decoration-none">
+                <svg class="btn-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.551H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.951-1.801"/>
+                </svg>
+                <span class="text-sm font-semibold tracking-wide flex gap-0.5">
+                  <span class="btn-letter">D</span>
+                  <span class="btn-letter">o</span>
+                  <span class="btn-letter">w</span>
+                  <span class="btn-letter">n</span>
+                  <span class="btn-letter">l</span>
+                  <span class="btn-letter">o</span>
+                  <span class="btn-letter">a</span>
+                  <span class="btn-letter">d</span>
+                  <span class="pl-1"></span>
+                  <span class="btn-letter font-bold text-amber-300">v1.0.0</span>
+                </span>
+              </a>
+            </div>
+
+            <!-- Docs Secondary Button -->
+            <div class="inline-block group text-sm rounded-full relative" data-aos="fade-up" data-aos-delay="300">
+              <a href="docs.html" class="group inline-flex min-w-[150px] cursor-pointer transition-all duration-300 hover:-translate-y-0.5 hover:text-white border border-white/10 bg-white/5 rounded-full px-5 py-3 relative backdrop-blur-xl items-center justify-center">
+                <span class="z-10 text-xs font-semibold rounded-full mr-2 relative text-white/80 group-hover:text-white transition-colors">
+                  Buka Dokumentasi
+                </span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-amber-400 transition-transform group-hover:translate-x-1">
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real Screenshot Showcase Frame (Interactive Tabs) -->
+        <div id="showcase" class="max-w-6xl mx-auto mt-12 mb-20" data-aos="zoom-in">
+          <div class="rounded-3xl border border-white/15 bg-[#0a0a0a]/90 p-3 sm:p-5 backdrop-blur-2xl shadow-2xl shadow-amber-950/20">
+            
+            <!-- Window Bar & Interactive Screenshot Switcher -->
+            <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-white/10 px-2">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
+                <span class="w-3 h-3 rounded-full bg-green-500/80"></span>
+                <span class="text-xs font-mono text-white/40 ml-2 hidden sm:inline" id="screenTitle">
+                  Printama — Modul Layout Pas Foto (Campur &amp; Multi-Orang)
+                </span>
+              </div>
+
+              <!-- Module Tabs -->
+              <div class="flex items-center gap-1.5 bg-white/5 p-1 rounded-xl border border-white/10">
+                <button onclick="switchScreenshot('pas-foto-campur', 'Printama — Modul Layout Pas Foto (Campur &amp; Multi-Orang)')" class="screenshot-tab active px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-500 text-black shadow transition">
+                  Pas Foto Campur
+                </button>
+                <button onclick="switchScreenshot('pas-foto-single', 'Printama — Modul Layout Pas Foto (1 Orang / 12 Foto)')" class="screenshot-tab px-3 py-1.5 rounded-lg text-xs font-semibold text-white/70 hover:text-white transition">
+                  Pas Foto Single
+                </button>
+                <button onclick="switchScreenshot('ktp', 'Printama — Modul Fotokopi &amp; Scan KTP 1:1 Presisi Fisik')" class="screenshot-tab px-3 py-1.5 rounded-lg text-xs font-semibold text-white/70 hover:text-white transition">
+                  FC KTP 1:1
+                </button>
+                <button onclick="switchScreenshot('polaroid', 'Printama — Modul Polaroid Studio 9-Grid Aesthetic')" class="screenshot-tab px-3 py-1.5 rounded-lg text-xs font-semibold text-white/70 hover:text-white transition">
+                  Polaroid Studio
+                </button>
+                <button onclick="switchScreenshot('dashboard', 'Printama — Home Dashboard Pilihan Modul')" class="screenshot-tab px-3 py-1.5 rounded-lg text-xs font-semibold text-white/70 hover:text-white transition">
+                  Dashboard
+                </button>
+              </div>
+            </div>
+
+            <!-- Screenshot Display Image -->
+            <div class="relative mt-4 aspect-[16/9] w-full rounded-2xl overflow-hidden bg-black/80 border border-white/10 shadow-inner group">
+              <img id="mainScreenshotImg" src="assets/screenshots/pas-foto-campur.png" alt="Printama Screenshot" class="w-full h-full object-cover object-top transition duration-500">
+              <div class="absolute bottom-3 right-4 px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/10 text-[11px] font-mono text-amber-300">
+                ● Live Screenshot Desktop App v1.0.0
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Top 3 Feature Grid -->
+        <div class="mx-auto max-w-7xl px-2 lg:px-4 mt-8">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Feature 1 -->
+            <div class="relative p-8 rounded-3xl border border-white/10 bg-white/5 overflow-hidden group hover:border-amber-500/30 transition-all duration-300 hover:-translate-y-1" data-aos="fade-up">
+              <div class="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 mb-6 relative z-10 border border-amber-500/20">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-medium text-white mb-2 relative z-10">
+                100% Offline &amp; Privasi Aman
+              </h3>
+              <p class="text-sm text-white/50 leading-relaxed relative z-10">
+                Seluruh pemrosesan dan rendering berjalan lokal di PC Anda. Foto pelanggan tidak pernah dikirim ke internet atau server luar.
+              </p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="relative p-8 rounded-3xl border border-white/10 bg-white/5 overflow-hidden group hover:border-amber-500/30 transition-all duration-300 hover:-translate-y-1" data-aos="fade-up" data-aos-delay="100">
+              <div class="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 mb-6 relative z-10 border border-amber-500/20">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                </svg>
+              </div>
+              <h3 class="text-xl font-medium text-white mb-2 relative z-10">
+                Layout Otomatis &amp; Hemat Kertas
+              </h3>
+              <p class="text-sm text-white/50 leading-relaxed relative z-10">
+                Algoritma cerdas menyusun kombinasi ukuran 2×3, 3×4, 4×6 secara otomatis di kertas A4 &amp; F4 tanpa kalkulasi manual yang membuang kertas.
+              </p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="relative p-8 rounded-3xl border border-white/10 bg-white/5 overflow-hidden group hover:border-amber-500/30 transition-all duration-300 hover:-translate-y-1" data-aos="fade-up" data-aos-delay="200">
+              <div class="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 mb-6 relative z-10 border border-amber-500/20">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/>
+                  <path d="M6 14h12v8H6z"/>
+                </svg>
+              </div>
+              <h3 class="text-xl font-medium text-white mb-2 relative z-10">
+                Ekspor 300 DPI &amp; Cetak Langsung
+              </h3>
+              <p class="text-sm text-white/50 leading-relaxed relative z-10">
+                Kualitas cetak resolusi tinggi siap print ke semua printer inkjet/laser (Epson, Canon, HP, Brother) dengan garis batas potong rapi.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Supported Printers & Environments Marquee -->
+    <section class="py-16 border-t border-white/5 bg-white/[0.02]" data-aos="fade-in">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <p class="text-center text-xs font-semibold text-white/40 mb-8 uppercase tracking-widest font-mono">
+          Kompatibel dengan Segala Jenis Printer &amp; Scanner Hardware
+        </p>
+
+        <div class="relative w-full overflow-hidden mask-gradient-x">
+          <div class="flex w-max gap-12 animate-[marquee_25s_linear_infinite] hover:[animation-play-state:paused] items-center text-white/60 font-mono text-sm font-semibold">
+            <span class="px-4 py-2 rounded-lg bg-white/5 border border-white/10">EPSON L-Series / Photo</span>
+            <span class="px-4 py-2 rounded-lg bg-white/5 border border-white/10">CANON Pixma / MegaTank</span>
+            <span class="px-4 py-2 rounded-lg bg-white/5 border border-white/10">HP Ink Tank / LaserJet</span>
+            <span class="px-4 py-2 rounded-lg bg-white/5 border border-white/10">BROTHER InkBenefit</span>
+            <span class="px-4 py-2 rounded-lg bg-white/5 border border-white/10">Kertas A4 &amp; F4 / Folio</span>
+            <span class="px-4 py-2 rounded-lg bg-white/5 border border-white/10">Scanner Hardware (WIA Protocol)</span>
+            <span class="px-4 py-2 rounded-lg bg-white/5 border border-white/10">Windows 10 &amp; Windows 11 64-bit</span>
+            <!-- Duplicate for loop -->
+            <span class="px-4 py-2 rounded-lg bg-white/5 border border-white/10">EPSON L-Series / Photo</span>
+            <span class="px-4 py-2 rounded-lg bg-white/5 border border-white/10">CANON Pixma / MegaTank</span>
+            <span class="px-4 py-2 rounded-lg bg-white/5 border border-white/10">HP Ink Tank / LaserJet</span>
+            <span class="px-4 py-2 rounded-lg bg-white/5 border border-white/10">BROTHER InkBenefit</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 Modul Utama Section with Real Screenshot Previews -->
+    <section id="modul" class="py-28 relative">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          
+          <!-- Left Sticky Explanation -->
+          <div class="flex flex-col h-full justify-between sticky top-24" data-aos="fade-right">
+            <div>
+              <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-400 mb-4">
+                <span>Alur Kerja Percetakan Lengkap</span>
+              </div>
+              <h2 class="text-4xl sm:text-5xl lg:text-6xl font-medium tracking-tight text-white leading-[1.05]">
+                Dibuat untuk
+                <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-200">
+                  kecepatan &amp; presisi.
+                </span>
+              </h2>
+              <p class="mt-6 text-base sm:text-lg text-white/60 leading-relaxed">
+                Printama menggantikan proses rumit mengatur ukuran foto satu per satu di software desain. Hemat waktu kerja operator studio hingga 80%.
+              </p>
+
+              <div class="mt-10 space-y-6">
+                <div class="group relative pl-6 border-l-2 border-white/10 hover:border-amber-400 transition-colors duration-300">
+                  <h3 class="text-lg font-semibold text-white group-hover:text-amber-400 transition-colors">
+                    1. Layout Pas Foto &amp; Preset Paket
+                  </h3>
+                  <p class="mt-1 text-sm text-white/50">
+                    Preset instan: Standar (12 foto), Lengkap (19 foto), Lamaran Kerja (11 foto), dan Full (35 foto) di lembar A4 &amp; F4.
+                  </p>
+                </div>
+
+                <div class="group relative pl-6 border-l-2 border-white/10 hover:border-cyan-400 transition-colors duration-300">
+                  <h3 class="text-lg font-semibold text-white group-hover:text-cyan-400 transition-colors">
+                    2. Fotokopi &amp; Scan KTP 1:1 Fisik
+                  </h3>
+                  <p class="mt-1 text-sm text-white/50">
+                    Ambil gambar langsung dari scanner, tata sisi depan dan belakang presisi ukuran kartu asli tanpa distorsi skala.
+                  </p>
+                </div>
+
+                <div class="group relative pl-6 border-l-2 border-white/10 hover:border-purple-400 transition-colors duration-300">
+                  <h3 class="text-lg font-semibold text-white group-hover:text-purple-400 transition-colors">
+                    3. Studio Polaroid Aesthetic
+                  </h3>
+                  <p class="mt-1 text-sm text-white/50">
+                    Cetak foto polaroid 9 foto/lembar dengan pembagian lembar otomatis (auto-pagination) dan 6 pilihan motif background unik.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-8">
+              <a href="docs.html" class="inline-flex items-center gap-2 text-sm font-semibold text-amber-400 hover:text-amber-300 transition-colors border-b border-amber-400/30 pb-0.5 hover:border-amber-400">
+                Pelajari Dokumentasi Lengkap
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Grid Feature & Capability Cards (No Screenshot Repetition) -->
+          <div class="space-y-6" data-aos="fade-left">
+            
+            <!-- Modul 1 Breakdown -->
+            <div class="rounded-3xl bg-[#0F0F0F] border border-white/10 p-7 hover:border-amber-500/40 transition duration-300 group">
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-[11px] font-mono font-bold px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                  01 / MODUL PAS FOTO
+                </span>
+                <span class="text-xs text-white/40 font-mono">A4 &amp; F4 Support</span>
+              </div>
+              
+              <h3 class="text-xl font-bold text-white mb-2 group-hover:text-amber-300 transition">
+                Kombinasi 2×3, 3×4, 4×6 &amp; 2R Otomatis
+              </h3>
+              
+              <p class="text-sm text-white/50 leading-relaxed mb-6">
+                Tata puluhan foto dalam satu lembar kertas dengan algoritma penempatan otomatis yang memaksimalkan setiap centimeter kertas tanpa celah terbuang.
+              </p>
+
+              <!-- Capability Tags -->
+              <div class="flex flex-wrap gap-2 mb-6">
+                <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-white/70">Preset Standar (12)</span>
+                <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-white/70">Preset Lengkap (19)</span>
+                <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-white/70">Preset Lamaran (11)</span>
+                <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-white/70">Preset Full (35)</span>
+                <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-white/70">Crop per Ukuran</span>
+                <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-white/70">Mode Campur Foto</span>
+                <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-white/70">Filter B&amp;W / Sepia</span>
+              </div>
+
+              <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs">
+                <span class="text-white/40">Efisiensi Area Kertas</span>
+                <span class="font-mono font-bold text-amber-400">Hingga 92% Terpakai</span>
+              </div>
+            </div>
+
+            <!-- Modul 2 Breakdown -->
+            <div class="rounded-3xl bg-[#0F0F0F] border border-white/10 p-7 hover:border-cyan-500/40 transition duration-300 group">
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-[11px] font-mono font-bold px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                  02 / FC KTP &amp; ID CARD
+                </span>
+                <span class="text-xs text-white/40 font-mono">Skala 1:1 Presisi</span>
+              </div>
+              
+              <h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyan-300 transition">
+                Scan Hardware &amp; Tata Letak Kartu Fisik
+              </h3>
+              
+              <p class="text-sm text-white/50 leading-relaxed mb-6">
+                Ambil gambar langsung dari perangkat scanner (WIA) atau unggah berkas KTP. Sistem otomatis menyejajarkan sisi depan-belakang dengan dimensi fisik 85.6 × 54 mm.
+              </p>
+
+              <!-- Capability Tags -->
+              <div class="flex flex-wrap gap-2 mb-6">
+                <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-white/70">Direct WIA Scanner</span>
+                <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-white/70">1 Pasang (Atas/Tengah)</span>
+                <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-white/70">Susunan 2 Baris</span>
+                <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-white/70">Susunan 4 Baris</span>
+                <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-white/70">Garis Potong Sudut</span>
+                <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-white/70">Koreksi Margin Printer</span>
+              </div>
+
+              <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs">
+                <span class="text-white/40">Kecepatan Layout</span>
+                <span class="font-mono font-bold text-cyan-400">Siap Cetak dalam 3 Detik</span>
+              </div>
+            </div>
+
+            <!-- Modul 3 Breakdown -->
+            <div class="rounded-3xl bg-[#0F0F0F] border border-white/10 p-7 hover:border-purple-500/40 transition duration-300 group">
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-[11px] font-mono font-bold px-3 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                  03 / POLAROID STUDIO
+                </span>
+                <span class="text-xs text-white/40 font-mono">Auto-Pagination</span>
+              </div>
+              
+              <h3 class="text-xl font-bold text-white mb-2 group-hover:text-purple-300 transition">
+                Multi-Sheet Otomatis &amp; 6 Motif Background
+              </h3>
+              
+              <p class="text-sm text-white/50 leading-relaxed mb-6">
+                Cetak foto polaroid aesthetic default 9 foto/lembar. Kelebihan foto otomatis didistribusikan ke lembar ke-2, ke-3, dst tanpa perlu input ulang.
+              </p>
+
+              <!-- Capability Tags -->
+              <div class="flex flex-wrap gap-2 mb-6">
+                <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-white/70">Auto-Pagination Cerdas</span>
+                <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-white/70">Grid 3x3, 2x3, 2x4, 3x4</span>
+                <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-white/70">Polkadot &amp; Stripes</span>
+                <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-white/70">Grid, Love, Star, Zigzag</span>
+                <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-white/70">Custom Image Texture</span>
+                <span class="text-xs font-mono px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-white/70">Custom Foto Caption</span>
+              </div>
+
+              <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs">
+                <span class="text-white/40">Kapasitas Maksimal</span>
+                <span class="font-mono font-bold text-purple-400">Hingga 12 Foto / Lembar A4</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Keunggulan Section -->
+    <section id="keunggulan" class="py-24 bg-neutral-900/20 border-t border-white/5">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-16">
+          <h2 class="text-3xl sm:text-4xl font-medium tracking-tight text-white font-geist" data-aos="fade-up">
+            Keunggulan Teknis Printama
+          </h2>
+          <p class="mt-4 text-base text-white/50 font-geist">
+            Didesain khusus untuk efisiensi usaha percetakan dan studio foto modern.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="rounded-2xl bg-[#0F0F0F] border border-white/10 p-6 hover:border-amber-500/30 transition duration-300" data-aos="fade-up">
+            <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 mb-4">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-2">Bebas Kuota &amp; Cloud</h3>
+            <p class="text-sm text-white/50 leading-relaxed">
+              Tidak bergantung pada internet. Anda bisa mencetak ribuan lembar di lokasi terpencil tanpa khawatir kuota data habis.
+            </p>
+          </div>
+
+          <div class="rounded-2xl bg-[#0F0F0F] border border-white/10 p-6 hover:border-amber-500/30 transition duration-300" data-aos="fade-up" data-aos-delay="100">
+            <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 mb-4">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-2">Kompensasi Margin Printer</h3>
+            <p class="text-sm text-white/50 leading-relaxed">
+              Fitur kalibrasi margin dan batas cetak printer memastikan foto di bagian pinggir kertas tidak terpotong oleh rol printer.
+            </p>
+          </div>
+
+          <div class="rounded-2xl bg-[#0F0F0F] border border-white/10 p-6 hover:border-amber-500/30 transition duration-300" data-aos="fade-up" data-aos-delay="200">
+            <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 mb-4">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-2">Rendering 300 DPI Tajam</h3>
+            <p class="text-sm text-white/50 leading-relaxed">
+              Ekspor langsung ke format PDF Siap Cetak 300 DPI, PNG, dan JPEG tanpa kompresi buram atau pecah.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="py-28 relative overflow-hidden">
+      <div class="absolute inset-0 bg-amber-900/5"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/10 blur-[100px] rounded-full pointer-events-none"></div>
+
+      <div class="mx-auto max-w-4xl px-6 lg:px-8 relative z-10 text-center" data-aos="zoom-in">
+        <h2 class="text-4xl md:text-5xl font-medium tracking-tight text-white font-geist">
+          Mulai Gunakan Printama Sekarang
+        </h2>
+        <p class="mt-6 text-base sm:text-lg text-white/60 font-geist max-w-2xl mx-auto">
+          Unduh gratis untuk PC Windows Anda dan nikmati kemudahan mencetak ratusan pas foto, kartu identitas, dan polaroid dalam hitungan detik.
+        </p>
+
+        <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <!-- Installer Download -->
+          <a href="update.html" class="inline-flex items-center gap-2 rounded-full bg-amber-500 px-8 py-4 text-sm font-bold text-black shadow-lg shadow-amber-500/20 hover:bg-amber-400 transition duration-300">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.551H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.951-1.801"/>
+            </svg>
+            <span>Download Installer Windows (.exe)</span>
+          </a>
+
+          <!-- Portable Download -->
+          <a href="update.html" class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-8 py-4 text-sm font-semibold text-white hover:bg-white/10 transition duration-300">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            <span>Download Portable (.zip)</span>
+          </a>
+        </div>
+
+        <div class="mt-6 text-xs text-white/40 font-mono">
+          Versi: 1.0.0 • Kompatibel dengan Windows 10 &amp; 11 (64-bit) • Ukuran: ~98 MB
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 bg-[#020202] pt-14 pb-12" data-aos="fade-up">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="flex flex-col items-center justify-center gap-6 text-center">
+          
+          <!-- Logo & Brand -->
+          <a href="#" class="flex items-center gap-2">
+            <img src="assets/logo-dark.png" alt="Printama" class="h-8 w-auto">
+          </a>
+          <p class="text-white/50 text-sm max-w-md leading-relaxed">
+            Aplikasi desktop cerdas penata &amp; pencetak pas foto presisi, fotokopi KTP 1:1, dan polaroid studio aesthetic untuk usaha percetakan modern.
+          </p>
+
+          <!-- Nav Links -->
+          <div class="flex items-center flex-wrap justify-center gap-6 text-xs font-semibold text-white/70 pt-2">
+            <a href="docs.html" class="hover:text-amber-400 transition">Documentation</a>
+            <span class="text-white/20">•</span>
+            <a href="changelog.html" class="hover:text-amber-400 transition">Changelog</a>
+            <span class="text-white/20">•</span>
+            <a href="update.html" class="hover:text-amber-400 transition">Update</a>
+            <span class="text-white/20">•</span>
+            <span class="font-mono text-[11px] px-2 py-0.5 rounded bg-white/5 text-amber-300 border border-white/10">v1.0.0</span>
+          </div>
+
+          <!-- Telegram Support & Saweria Donation -->
+          <div class="flex items-center flex-wrap justify-center gap-3 pt-2">
+            <!-- Telegram Support Button -->
+            <a href="https://t.me/dstama" target="_blank" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-white transition group" title="Hubungi Dukungan & Pengembang via Telegram @dstama">
+              <svg width="14" height="14" fill="#229ED9" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+              </svg>
+              <span class="text-white/70 group-hover:text-white">Support:</span>
+              <span class="text-amber-400 font-bold">@dstama</span>
+            </a>
+
+            <!-- Saweria Donation Button -->
+            <a href="https://saweria.co/adyatamatech" target="_blank" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-xs font-semibold text-amber-300 transition shadow-sm group" title="Dukung Pengembangan Aplikasi Printama via Saweria">
+              <svg width="14" height="14" fill="#f59e0b" viewBox="0 0 24 24" class="group-hover:scale-110 transition-transform">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+              <span>Donasi Saweria</span>
+            </a>
+          </div>
+
+          <div class="pt-6 border-t border-white/5 w-full max-w-xl text-xs text-white/40">
+            © 2026 Printama. Dikembangkan oleh <strong>@dstama</strong>. All rights reserved.
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Interactive Screenshot Switcher Script & AOS JS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 700, once: true, offset: 40 });
+
+    function switchScreenshot(key, title) {
+      const img = document.getElementById('mainScreenshotImg');
+      const titleEl = document.getElementById('screenTitle');
+      const tabs = document.querySelectorAll('.screenshot-tab');
+
+      if (img) {
+        img.style.opacity = '0.4';
+        setTimeout(() => {
+          img.src = 'assets/screenshots/' + key + '.png';
+          img.style.opacity = '1';
+        }, 150);
+      }
+
+      if (titleEl) {
+        titleEl.textContent = title;
+      }
+
+      tabs.forEach(tab => {
+        tab.classList.remove('bg-amber-500', 'text-black', 'shadow');
+        tab.classList.add('text-white/70');
+      });
+
+      if (event && event.currentTarget) {
+        event.currentTarget.classList.add('bg-amber-500', 'text-black', 'shadow');
+        event.currentTarget.classList.remove('text-white/70');
+      }
+    }
+  </script>
+</body>
+</html>

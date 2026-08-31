@@ -669,31 +669,69 @@ export function registerIpcHandlers(mainWindow: BrowserWindow): void {
     }
   })
 
-  // 13. Auto-Check Update dari GitHub Releases
+  // 13. Auto-Check Update dari GitHub Releases / Tags
   ipcMain.handle('app:check-for-updates', async () => {
     try {
       const currentVersion = app.getVersion() || '1.0.0'
-      const response = await fetch(
+      const headers = {
+        'User-Agent': 'Printama-Desktop-App',
+        Accept: 'application/vnd.github.v3+json'
+      }
+
+      // 1. Coba ambil dari Releases resmi
+      let release: any = null
+      let rawTag = ''
+      let latestVersion = ''
+      let releaseTitle = ''
+      let releaseNotes = ''
+      let downloadUrl = ''
+      let htmlUrl = `https://github.com/adyatamamedia/printama/releases`
+      let publishedAt: string | undefined
+
+      const releaseRes = await fetch(
         'https://api.github.com/repos/adyatamamedia/printama/releases/latest',
-        {
-          headers: {
-            'User-Agent': 'Printama-Desktop-App',
-            Accept: 'application/vnd.github.v3+json'
-          }
-        }
+        { headers }
       )
 
-      if (!response.ok) {
-        return {
-          hasUpdate: false,
-          currentVersion,
-          error: response.status === 404 ? 'Belum ada rilis publik di GitHub.' : `HTTP ${response.status}`
+      if (releaseRes.ok) {
+        release = await releaseRes.json()
+        rawTag = release.tag_name || ''
+        latestVersion = rawTag.replace(/^v/i, '')
+        releaseTitle = release.name || `Rilis v${latestVersion}`
+        releaseNotes = release.body || 'Pembaruan stabilitas dan peningkatan performa.'
+        htmlUrl = release.html_url || htmlUrl
+        publishedAt = release.published_at
+
+        const exeAsset = release.assets?.find(
+          (a: any) => typeof a.name === 'string' && a.name.toLowerCase().endsWith('.exe')
+        )
+        downloadUrl = exeAsset ? exeAsset.browser_download_url : htmlUrl
+      } else {
+        // 2. Fallback: Coba ambil dari Git Tags terbaru
+        const tagsRes = await fetch(
+          'https://api.github.com/repos/adyatamamedia/printama/tags',
+          { headers }
+        )
+
+        if (tagsRes.ok) {
+          const tags = (await tagsRes.json()) as any[]
+          if (Array.isArray(tags) && tags.length > 0) {
+            rawTag = tags[0].name || ''
+            latestVersion = rawTag.replace(/^v/i, '')
+            releaseTitle = `Printama v${latestVersion}`
+            releaseNotes = 'Rilis versi terbaru dari GitHub.'
+            htmlUrl = `https://github.com/adyatamamedia/printama/releases/tag/${rawTag}`
+            downloadUrl = htmlUrl
+          }
         }
       }
 
-      const release = (await response.json()) as any
-      const rawTag = release.tag_name || ''
-      const latestVersion = rawTag.replace(/^v/i, '')
+      if (!latestVersion) {
+        return {
+          hasUpdate: false,
+          currentVersion
+        }
+      }
 
       const parseSemver = (v: string) =>
         v.replace(/^v/i, '').split('.').map((n) => parseInt(n, 10) || 0)
@@ -705,21 +743,15 @@ export function registerIpcHandlers(mainWindow: BrowserWindow): void {
       else if (lMaj === cMaj && lMin > cMin) hasUpdate = true
       else if (lMaj === cMaj && lMin === cMin && lPatch > cPatch) hasUpdate = true
 
-      // Cari file installer .exe jika tersedia
-      const exeAsset = release.assets?.find(
-        (a: any) => typeof a.name === 'string' && a.name.toLowerCase().endsWith('.exe')
-      )
-      const downloadUrl = exeAsset ? exeAsset.browser_download_url : release.html_url
-
       return {
         hasUpdate,
         currentVersion,
         latestVersion,
-        releaseTitle: release.name || rawTag,
-        releaseNotes: release.body || 'Pembaruan stabilitas dan peningkatan fitur.',
+        releaseTitle,
+        releaseNotes,
         downloadUrl,
-        htmlUrl: release.html_url,
-        publishedAt: release.published_at
+        htmlUrl,
+        publishedAt
       }
     } catch (err: any) {
       console.error('Check update failed:', err)

@@ -6,7 +6,7 @@
 Options -Indexes
 
 # 2. Blokir Akses ke File Tersembunyi & Sensitif
-<FilesMatch "(^\.|\.json$|\.lock$|\.md$|\.yml$|\.yaml$|\.env$|\.sql$|\.bak$|\.log$)">
+<FilesMatch "(^\.|\.json$|\.lock$|\.md$|\.yml$|\.yaml$|\.env$|\.sql$|\.bak$|\.log$|\.sh$|\.conf$)">
   Order Allow,Deny
   Deny from all
 </FilesMatch>
